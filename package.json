@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/FACG4/chat#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "env2": "^2.2.0",
     "express": "^4.16.3",
     "express-handlebars": "^3.0.0",

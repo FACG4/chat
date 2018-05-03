@@ -28,7 +28,8 @@ const selectHashedPassword = (username, cb)=>{
 
   db.query(sql, (err,result)=>{
     if(err) return cb(err);
-    return cb(null, result.rows[0].password);
+    // return cb(null, result.rows[0].password);
+    return cb(null, result);
   })
 
 }

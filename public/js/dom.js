@@ -1,5 +1,5 @@
 $(function() {
-  var socket = io.connect("https://facg4-chat.herokuapp.com");
+  var socket = io();
   const submit = document.getElementById("submit");
   const mes = document.getElementById("mes");
   const messageContent = document.getElementById("messageContent");

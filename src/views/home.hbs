@@ -1,44 +1,16 @@
 <div class="chatbox-holder">
     <div class="chat-messages">
-        <div class="message-box-holder">
-         <div class="message-box">
-           What are you people doing?
-         </div>
-       </div>
+
 
        <div class="message-box-holder">
-         <div class="message-sender">
-           <a href="#">Ben Stiller</a>
-          </div>
-         <div class="message-box message-partner">
-
-           <ul  id="mes">
-             <li>{{data.id}}</li>
-             <li>{{data.username}}</li>
-           </ul>
-         </div>
        </div>
 
-     <div  class="chat-input-holder">
-       <textarea id="messageContent" class="chat-input"></textarea>
-       <input id="submit" type="submit" value="Send" class="message-send" />
-     </div>
-     <script src="/socket.io/socket.io.js"></script>
-      <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-        <script>
-       
-        var socket = io();
-        const submit = document.getElementById("submit");
-        const mes = document.getElementById("mes");
-        const messageContent = document.getElementById("messageContent");
-        const li = document.createElement("li");
-        messageContent.addEventListener("keyup", (e)=>{
-        if(e.which == 13) {
-        socket.emit('chat message', messageContent.value);
-        messageContent.value = "";
-          return false;
-        }
-       
+       <div  class="chat-input-holder">
+         <textarea id="messageContent" class="chat-input"></textarea>
+         <input id="submit" type="submit" value="Send" class="message-send" />
+       </div>
+    </div>
+  </div>
 
         socket.on('chat message', function(msg){
         mes.textContent = msg;
@@ -48,5 +20,6 @@
         });
         </script>
 
-  </div>
-</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="./js/dom.js"></script>

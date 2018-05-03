@@ -3,12 +3,20 @@ const bcrypt = require('bcryptjs');
 const { sign, verify } = require('jsonwebtoken');
 
 exports.get = (req, res) => {
-  res.render("login", {
-    title: "Login Page"
-  });
+  if (req.headers.cookie) {
+    verify(req.headers.cookie.split("=").slice(1).toString(), process.env.JWT_KEY, function(err, decoded) {
+        if (err) console.log(err);
+        else {
+          res.redirect('/');
+        }
+      })
+    }
+    else{
+      res.render("login", {
+        title: "Login Page"
+      });
+    }
 };
-
-
 exports.post = (req, res) => {
   if(req.body){
     const {username, password} = req.body;
@@ -26,7 +34,7 @@ exports.post = (req, res) => {
               if(err) return res.status(500);//data base err
               if(result.rowCount===1){
                 var userDetails = result.rows[0];
-                const SECRET = 'abc';
+                const SECRET = process.env.JWT_KEY;
                 const cookie = sign(JSON.stringify(userDetails), SECRET);
                 res.cookie('user_session',cookie, { maxAge: 900000, httpOnly: true });
                 res.redirect('/');

@@ -1,21 +1,19 @@
 const select = require('../model/queries/select');
-
-
-
+const jwt = require('jsonwebtoken');
+const cookie = require('cookie');
 
 exports.get = (req, res) => {
-  select.selectUserData('Israa', 'israamm94@gmail.com',123, (err,result)=>{
-    if(err) console.log(err);
-    res.render("home", {
-      title: "Chat",
-      data: result.rows[0]
-    });
-  })
-
-//  if(cookie){
-    //verify cookie
-    //res.render('home')
-  //}else{
-    //redirect /login
-  //}
-};
+  if (req.headers.cookie) {
+    jwt.verify(req.headers.cookie.split("=").slice(1).toString(), process.env.JWT_KEY, function(err, decoded) {
+        if (err) console.log(err);
+        else {
+          res.render('home', {
+            title: 'Chat'
+          })
+        }
+      })
+    }
+    else{
+      res.redirect('/login')
+    }
+  }

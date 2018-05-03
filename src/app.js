@@ -1,13 +1,14 @@
 const express = require("express");
 const favicon = require("serve-favicon");
 const exphbs = require("express-handlebars");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const app = express();
 const controllers = require("./controllers/index");
 const helpers = require("./views/helpers/index");
 const path = require("path");
+var cookieParser = require("cookie-parser");
 
-
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

@@ -1,19 +1,21 @@
-const select = require('../model/queries/select');
-const jwt = require('jsonwebtoken');
-const cookie = require('cookie');
+const select = require("../model/queries/select");
+const jwt = require("jsonwebtoken");
+const cookie = require("cookie");
 
 exports.get = (req, res) => {
-  if (req.headers.cookie) {
-    jwt.verify(req.headers.cookie.split("=").slice(1).toString(), process.env.JWT_KEY, function(err, decoded) {
-        if (err) console.log(err);
+  if (!req.headers.cookie || !req.headers.cookie.includes("token")) {
+    res.redirect("/login");
+  } else {
+    const token = cookie.parse(req.headers.cookie).token;
+    if (token) {
+      jwt.verify(token, process.env.JWT_KEY, function(err, decoded) {
+        if (err) res.status(500);
         else {
-          res.render('home', {
-            title: 'Chat'
-          })
+          res.render("home", {
+            title: "Chat"
+          });
         }
-      })
-    }
-    else{
-      res.redirect('/login')
+      });
     }
   }
+};

@@ -5,5 +5,31 @@
 </head>
 <body>
   {{{body}}}
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+$(function () {
+var socket = io();
+const submit = document.getElementById("submit");
+const mes = document.getElementById("mes");
+const messageContent = document.getElementById("messageContent");
+const li = document.createElement("li");
+messageContent.addEventListener("keyup", (e)=>{
+if(e.which == 13) {
+socket.emit('chat message', messageContent.value);
+messageContent.value = "";
+  return false;
+}
+});
+
+socket.on('chat message', function(msg){
+mes.textContent = msg;
+
+    });
+
+});
+</script>
 </body>
 </html>

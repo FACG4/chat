@@ -1,8 +1,7 @@
 const db = require('./../db_connect');
 
-const insertUser = (data,cb)=>{
-  const {username,email,password} = data;
-  let sql ={
+const insertUser = (username, email, password, cb)=>{
+  const sql ={
     text:'INSERT INTO users (username,email,password) VALUES ($1,$2,$3)',
     values:[username, email, password]
   };
@@ -15,7 +14,7 @@ const insertUser = (data,cb)=>{
 
 const insertMsg = (data,cb)=>{
   const {user_id,content} = data;
-  let sql ={
+  const sql ={
     text:'INSERT INTO messages (user_id, content, date) VALUES ($1,$2, $3)',
     values:[user_id, content, 'DEFAULT']
   };

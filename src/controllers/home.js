@@ -1,21 +1,23 @@
 const select = require('../model/queries/select');
-
-
+const jwt = require('jsonwebtoken');
 
 
 exports.get = (req, res) => {
-  select.selectUserData('Israa', 'israamm94@gmail.com',123, (err,result)=>{
-    if(err) console.log(err);
-    res.render("home", {
-      title: "Chat",
-      data: result.rows[0]
-    });
+  console.log(decoded);
+  if(req.headers.cookie)
+  {
+    
+  }
+  jwt.verify('user_session','abc',(err ,decoded)=>{
+    console.log(decoded);
+    if(err){
+       throw new Error(err);
+    }else{
+      res.render("login", {
+        title: "Login Page"
+      });
+    }
   })
 
-//  if(cookie){
-    //verify cookie
-    //res.render('home')
-  //}else{
-    //redirect /login
-  //}
 };
+

@@ -1,23 +1,19 @@
 const select = require('../model/queries/select');
 const jwt = require('jsonwebtoken');
-
+const cookie = require('cookie');
 
 exports.get = (req, res) => {
-  console.log(decoded);
-  if(req.headers.cookie)
-  {
-    
-  }
-  jwt.verify('user_session','abc',(err ,decoded)=>{
-    console.log(decoded);
-    if(err){
-       throw new Error(err);
-    }else{
-      res.render("login", {
-        title: "Login Page"
-      });
+  if (req.headers.cookie) {
+    jwt.verify(req.headers.cookie.split("=").slice(1).toString(), process.env.JWT_KEY, function(err, decoded) {
+        if (err) console.log(err);
+        else {
+          res.render('home', {
+            title: 'Chat'
+          })
+        }
+      })
     }
-  })
-
-};
-
+    else{
+      res.redirect('/login')
+    }
+  }

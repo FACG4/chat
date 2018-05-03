@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const insert = require('../model/queries/insert');
-const checkUserExistance = require('./checkuser')
+const checkUserExistance = require('./checkuser');
+const { sign, verify } = require('jsonwebtoken');
 
 
 
@@ -35,7 +36,17 @@ exports.post = (req, res) => {
 };
 
 exports.get = (req, res)=>{
-    res.render("signup", {
-      title: "Sign Up"
-    });
+  if (req.headers.cookie) {
+    verify(req.headers.cookie.split("=").slice(1).toString(), process.env.JWT_KEY, function(err, decoded) {
+        if (err) console.log(err);
+        else {
+          res.redirect('/');
+        }
+      })
+    }
+    else{
+      res.render("signup", {
+        title: "Sign Up Page"
+      });
+    }
 }

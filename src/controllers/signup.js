@@ -40,17 +40,17 @@ exports.post = (req, res) => {
 };
 
 exports.get = (req, res) => {
-  const token = cookie.parse(req.headers.cookie).token;
-  if (token) {
+  if (!req.headers.cookie || !req.headers.cookie.includes("token")) {
+    res.render("signup", {
+      title: "SignUp"
+    });
+  } else {
+    const token = cookie.parse(req.headers.cookie).token;
     verify(token, process.env.JWT_KEY, function(err, decoded) {
       if (err) res.status(500);
       else {
-        res.redirect("/login");
+        res.redirect("/");
       }
-    });
-  } else {
-    res.render("signup", {
-      title: "signup"
     });
   }
 };

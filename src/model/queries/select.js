@@ -1,7 +1,7 @@
 const db = require('./../db_connect');
 
 const selectUserData = (username, email, password ,cb)=>{
-  const sql;
+  let sql;
   if(username !=='' && password !== null){
     sql ={
       text:'SELECT id, username FROM users WHERE username = $1 AND password = $2',

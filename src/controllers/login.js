@@ -23,28 +23,34 @@ exports.post = (req, res) => {
   if (req.body) {
     const { username, password } = req.body;
     if (username.trim() !== "" && password !== "") {
-      select.selectHashedPassword(username.trim(), (err, hashedDB) => {
+      select.selectHashedPassword(username.trim(), (err, result) => {
         if (err) res.send("<h1>Wrong name or password</h1>");
-        bcrypt.compare(password, hashedDB, (err, hashedResult) => {
-          if (err) res.status(500);
-          if (hashedResult) {
-            select.selectUserData(username, null, hashedDB, (err, result) => {
-              if (err) return res.status(500); //data base err
-              if (result.rowCount === 1) {
-                var userDetails = result.rows[0];
-                const SECRET = process.env.JWT_KEY;
-                const token = sign(JSON.stringify(userDetails), SECRET);
-                res.cookie("token", token, {
-                  maxAge: 900000,
-                  httpOnly: true
-                });
-                res.redirect("/");
-              }
-            });
-          } else {
-            res.send("<h1>Wrong name or password</h1>");
-          }
-        });
+        if(result.rowCount === 0){
+          res.send("<h1>Wrong name or password</h1>");
+        } else{
+          const hashedDB = result.rows[0].password;
+          bcrypt.compare(password, hashedDB, (err, hashedResult) => {
+            if (err) res.status(500);
+            if (hashedResult) {
+              select.selectUserData(username, null, hashedDB, (err, result) => {
+                if (err) return res.status(500); //data base err
+                if (result.rowCount === 1) {
+                  var userDetails = result.rows[0];
+                  const SECRET = process.env.JWT_KEY;
+                  const token = sign(JSON.stringify(userDetails), SECRET);
+                  res.cookie("token", token, {
+                    maxAge: 900000,
+                    httpOnly: true
+                  });
+                  res.redirect("/");
+                }
+              });
+            } else {
+              res.send("<h1>Wrong name or password</h1>");
+            }
+          });
+
+        }
       });
     } else {
       res.send("<h1>Name and Password are required</h1>");

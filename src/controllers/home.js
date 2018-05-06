@@ -12,7 +12,8 @@ exports.get = (req, res) => {
         if (err) res.status(500);
         else {
           res.render("home", {
-            title: "Chat"
+            title: "Chat",
+            decoded:decoded
           });
         }
       });

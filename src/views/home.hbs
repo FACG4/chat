@@ -4,17 +4,17 @@
 
        <div class="message-box-holder">
        </div>
-
        <div  class="chat-input-holder">
-         <textarea id="messageContent" class="chat-input"></textarea>
-         <input id="submit" type="submit" value="Send" class="message-send" />
-         <input class="user" type="hidden" name="" value={{decoded.username}}>
+         <!-- <form class="form" action="" method="post"> -->
+
+           <input id="messageContent" class="chat-input" name="msg" ></input>
+           <input id="submit" type="submit" value="Send" class="message-send" />
+           <input class="user" type="hidden" name="username" value={{decoded.username}}>
+         <!-- </form> -->
+
        </div>
     </div>
   </div>
-
-       
-        </script>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>

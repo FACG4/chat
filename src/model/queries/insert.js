@@ -12,14 +12,15 @@ const insertUser = (username, email, password, cb)=>{
   })
 };
 
-const insertMsg = (data,cb)=>{
-  const {user_id,content} = data;
-  const sql ={
-    text:'INSERT INTO messages (user_id, content, date) VALUES ($1,$2, $3)',
-    values:[user_id, content, 'DEFAULT']
-  };
+const insertMsg = (user_id,content,cb)=>{
+  // const sql ={
+  //   text:'INSERT INTO messages (user_id, content, date) VALUES ($1,$2, $3)',
+  //   values:[user_id, content, 'DEFAULT']
+  // };
 
-  db.query(sql, (err,result)=>{
+  db.query(`INSERT INTO messages (user_id, content, date) VALUES (${user_id},${content},DEFAULT)`, (err,result)=>{
+    console.log('con',content);
+    console.log('inside insert');
     if(err) return cb(err);
     return cb(null, result);
   })

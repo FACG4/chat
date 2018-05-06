@@ -1,4 +1,6 @@
 const select = require("../model/queries/select");
+const insert = require("../model/queries/insert");
+
 const jwt = require("jsonwebtoken");
 const cookie = require("cookie");
 
@@ -19,4 +21,13 @@ exports.get = (req, res) => {
       });
     }
   }
-};
+}
+// exports.post =(req,res)=>{
+//     console.log(req.body);
+//     const {msg}= req.body;
+//     insert.insertMsg(1,msg, (err,result)=>{
+//      if(err) res.status(500);
+//      // res.status(200);
+//      return
+//         })
+// }

@@ -33,7 +33,7 @@ exports.post = (req, res) => {
             select.selectUserData(username, null, hashedDB, (err, result) => {
               if (err) return res.status(500); //data base err
               if (result.rowCount === 1) {
-                var userDetails = result.rows[0];
+                const userDetails = result.rows[0];
                 const SECRET = process.env.JWT_KEY;
                 const token = sign(JSON.stringify(userDetails), SECRET);
                 res.cookie("token", token, {

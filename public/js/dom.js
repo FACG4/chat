@@ -17,11 +17,24 @@ $(function() {
   send.addEventListener("click", e => {
 
     socket.emit("chat message", messageContent.value);
+    // sendData(messageContent.value,user.value);
     messageContent.value = "";
     return false;
 
   });
 
+function sendData(message,userName){
+  console.log('before fetch');
+
+  fetch('/',{
+    method:'POST',
+    body:{
+      user_name: userName,
+      msg:message
+    }
+  }).catch(err=>err)
+  console.log('after fetch');
+}
 
   socket.on("chat message", function(msg) {
     // const msgBox = document.createElement('div');
@@ -30,7 +43,6 @@ $(function() {
     // const bigBox = document.querySelector('.message-box-holder');
     // bigBox.appendChild(msgBox);
     const user = document.querySelector(".user");
-
     const msgBoxHolder = document.querySelector(".message-box-holder");
     const msgSender = document.createElement("div");
     msgSender.setAttribute("class", "message-sender");
@@ -42,5 +54,6 @@ $(function() {
     msgContent.setAttribute("class", "message-box message-partner");
     msgBoxHolder.appendChild(msgContent);
     msgContent.textContent = msg;
+    // sendData(msg,user.value);
   });
 });

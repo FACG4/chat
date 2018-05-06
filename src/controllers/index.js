@@ -8,5 +8,6 @@ router.get("/login", login.get);
 router.post("/login", login.post);
 router.get("/signup", signup.get);
 router.post("/signup", signup.post);
+// router.post("/",home.post);
 
 module.exports = router;

@@ -11,9 +11,11 @@ exports.get = (req, res) => {
   } else {
     const token = cookie.parse(req.headers.cookie).token;
     verify(token, process.env.JWT_KEY, function(err, decoded) {
+
       if (err) res.status(500);
       else {
         res.redirect("/");
+        console.log(decoded);
       }
     });
   }
@@ -36,7 +38,7 @@ exports.post = (req, res) => {
                 const token = sign(JSON.stringify(userDetails), SECRET);
                 res.cookie("token", token, {
                   maxAge: 900000,
-                  httpOnly: true
+                  httpOnly: false
                 });
                 res.redirect("/");
               }
